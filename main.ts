@@ -1,9 +1,31 @@
 namespace SpriteKind {
     export const Coin = SpriteKind.create()
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile0`, function (sprite, location) {
+    Checkpoint = 1
+    tiles.setTileAt(tiles.getTileLocation(21, 9), assets.tile`myTile1`)
+    scene.cameraShake(4, 500)
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (Character.vy == 0) {
         Character.vy = -100
+    }
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile6`, function (sprite, location) {
+    if (Checkpoint == 0) {
+        tiles.placeOnTile(Character, tiles.getTileLocation(3, 10))
+        scene.cameraShake(4, 100)
+        Life += -1
+    } else if (Checkpoint == 1) {
+        scene.cameraShake(4, 100)
+        Life += -1
+        tiles.placeOnTile(Character, tiles.getTileLocation(21, 9))
+    } else if (false) {
+    	
+    } else if (false) {
+    	
+    } else {
+    	
     }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
@@ -12,7 +34,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, lo
         scene.cameraShake(4, 100)
         Life += -1
     } else if (Checkpoint == 1) {
-    	
+        scene.cameraShake(4, 100)
+        Life += -1
+        tiles.placeOnTile(Character, tiles.getTileLocation(21, 9))
     } else if (false) {
     	
     } else if (false) {
@@ -26,8 +50,43 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         Character.vy = -110
     }
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile7`, function (sprite, location) {
+    tiles.placeOnTile(Character, tiles.getTileLocation(31, 1))
+    scene.cameraShake(4, 500)
+    Character.vy = Character.vy + 50
+    timer.after(500, function () {
+        Character.vy = 0
+    })
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile8`, function (sprite, location) {
+    tiles.placeOnTile(Character, tiles.getTileLocation(24, 12))
+    scene.cameraShake(4, 500)
+    Character.vy = Character.vy - 100
+})
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     Character.vy = 160
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
+    if (Character.isHittingTile(CollisionDirection.Bottom)) {
+        Character.vy = Character.vy - 150
+    }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (Checkpoint == 0) {
+        tiles.placeOnTile(Character, tiles.getTileLocation(3, 10))
+        scene.cameraShake(4, 100)
+        Life += -1
+    } else if (Checkpoint == 1) {
+        scene.cameraShake(4, 100)
+        Life += -1
+        tiles.placeOnTile(Character, tiles.getTileLocation(21, 9))
+    } else if (false) {
+    	
+    } else if (false) {
+    	
+    } else {
+    	
+    }
 })
 let Character: Sprite = null
 let Checkpoint = 0
@@ -60,7 +119,173 @@ let Coin2 = sprites.create(img`
     . f d d d d f . 
     . . f f f f . . 
     `, SpriteKind.Coin)
-Coin2.setPosition(492, 188)
+let MUSSY = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . b b b b . . . . 
+    . . . . b b b b 3 3 3 3 b . . . 
+    . c c b 1 1 3 3 3 3 3 3 b b . . 
+    c c c 3 1 1 1 3 3 3 3 3 3 b . . 
+    c b 3 3 3 3 3 3 3 3 3 1 1 b . . 
+    f b b c c c c b 3 3 3 1 1 c . . 
+    f b c c c d d d b b 3 3 3 c c . 
+    f b c b d d d d d d b b 3 3 b c 
+    . c b d d d d d d d d b c 3 3 c 
+    . c d c c d d d d d d c c c 3 f 
+    . f d d d d d c c d d c c c b f 
+    . f d b b b d d d d d c c c b f 
+    . . c d d d d d b f f c b b f f 
+    . . f b d d d b b d d f f f f . 
+    . . f f f c c b d d d f . . . . 
+    `, SpriteKind.Enemy)
+characterAnimations.loopFrames(
+MUSSY,
+[img`
+    . . . . b b b b . . . . . . . . 
+    . . . b 3 3 3 3 b b b b . . . . 
+    . . b b 3 3 3 3 3 1 1 b b c c . 
+    . . b 1 1 3 3 3 3 3 1 1 3 b c c 
+    . . b 1 1 3 3 3 3 3 3 3 3 3 b c 
+    . . c 3 3 3 3 3 b c c c c b b f 
+    . c 3 3 3 3 b b d d d c c c b f 
+    c b 3 3 b b d d d d d d b c b f 
+    c 3 3 c b d d d d d d c d b c . 
+    f 3 c c c d d c d d d c d d c . 
+    f b c c c d d d c d d d d d f . 
+    f b c c c f f b d d b b b d f . 
+    f f b b f b d d b d d d d c . . 
+    . f f f f d d b b d d d c . . . 
+    . . . . b b b b f b b f f . . . 
+    . . . . . . . f f b b b f . . . 
+    `,img`
+    . . . . . . . . . . . . . . . . 
+    . . . . b b b b . . . . . . . . 
+    . . . b 3 3 3 3 b b b b . . . . 
+    . . b b 3 3 3 3 3 1 1 b b c c . 
+    . . b 1 1 3 3 3 3 1 1 1 3 c c c 
+    . . b 1 1 3 3 3 3 3 3 3 3 3 b c 
+    . . c 1 1 3 3 b b c c c c b b f 
+    . c c 3 3 b b d d d d b c c b f 
+    c b 3 3 b b d d d d d d d c b f 
+    c 3 3 b b d d d d d d c d d c . 
+    f 3 3 c b d d c d d d c d d c . 
+    f b c c c d d d c d d d d d f . 
+    f b c c c d d f f b b b b d f . 
+    f f b b c c f b d d b d d c . . 
+    . f f f c c f d d b b d c . . . 
+    . . . . . . b b b b f c . . . . 
+    `,img`
+    . . . . . . . . . . . . . . . . 
+    . . . . b b b b . . . . . . . . 
+    . . . b 3 3 3 3 b b b b . . . . 
+    . . b b 3 3 3 3 3 3 1 1 b c c . 
+    . . b 3 3 3 3 3 3 1 1 1 3 c c c 
+    . . b 1 1 3 3 3 3 3 3 3 3 3 b c 
+    . . c 1 1 3 3 3 b c c c c b b f 
+    . c c 3 3 3 b b d d d c c c b f 
+    c b 3 3 b b d d d d d d b c b f 
+    c 3 3 c b d d d d d d d d b c . 
+    f 3 c c c d d d d d d c c d c . 
+    f b c c c d d c c d d d d d f . 
+    f b c c c d d d d d b b b d f . 
+    f f b b c f f b d d d d d c . . 
+    . f f f f d d b b d d d b f . . 
+    . . . . f d d d b c c f f f . . 
+    `,img`
+    . . . . b b b b . . . . . . . . 
+    . . . b 3 3 3 3 b b b b . . . . 
+    . . b b 3 3 3 3 3 1 1 b b c c . 
+    . . b 1 1 3 3 3 3 3 1 1 3 3 c c 
+    . . b 1 1 3 3 3 3 3 3 3 3 3 b c 
+    . . c 3 3 3 3 3 3 3 c c c b b f 
+    . c 3 3 3 3 3 b b b b c c c b f 
+    c 3 3 3 3 b b d d d d d c c b f 
+    c 3 3 c b d d d d d d c d c c . 
+    f 3 c c c d d c d d d c d b c . 
+    f b c c c d d d c d d d d d f . 
+    f b c c c d d d d d b b b d f . 
+    f f b b c b d d d d d d d c . . 
+    . f f f f b c c d d d d f f . . 
+    . . f b d d b c c f f b b f f . 
+    . . f d d d b . . f f b b b f . 
+    `],
+100,
+characterAnimations.rule(Predicate.MovingRight)
+)
+MUSSY.vx = 50
+characterAnimations.loopFrames(
+MUSSY,
+[img`
+    . . . . . . . . b b b b . . . . 
+    . . . . b b b b 3 3 3 3 b . . . 
+    . c c b b 1 1 3 3 3 3 3 b b . . 
+    c c b 3 1 1 3 3 3 3 3 1 1 b . . 
+    c b 3 3 3 3 3 3 3 3 3 1 1 b . . 
+    f b b c c c c b 3 3 3 3 3 c . . 
+    f b c c c d d d b b 3 3 3 3 c . 
+    f b c b d d d d d d b b 3 3 b c 
+    . c b d c d d d d d d b c 3 3 c 
+    . c d d c d d d c d d c c c 3 f 
+    . f d d d d d c d d d c c c b f 
+    . f d b b b d d b f f c c c b f 
+    . . c d d d d b d d b f b b f f 
+    . . . c d d d b b d d f f f f . 
+    . . . f f b b f b b b b . . . . 
+    . . . f b b b f f . . . . . . . 
+    `,img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . b b b b . . . . 
+    . . . . b b b b 3 3 3 3 b . . . 
+    . c c b b 1 1 3 3 3 3 3 b b . . 
+    c c c 3 1 1 1 3 3 3 3 1 1 b . . 
+    c b 3 3 3 3 3 3 3 3 3 1 1 b . . 
+    f b b c c c c b b 3 3 1 1 c . . 
+    f b c c b d d d d b b 3 3 c c . 
+    f b c d d d d d d d b b 3 3 b c 
+    . c d d c d d d d d d b b 3 3 c 
+    . c d d c d d d c d d b c 3 3 f 
+    . f d d d d d c d d d c c c b f 
+    . f d b b b b f f d d c c c b f 
+    . . c d d b d d b f c c b b f f 
+    . . . c d b b d d f c c f f f . 
+    . . . . c f b b b b . . . . . . 
+    `,img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . b b b b . . . . 
+    . . . . b b b b 3 3 3 3 b . . . 
+    . c c b 1 1 3 3 3 3 3 3 b b . . 
+    c c c 3 1 1 1 3 3 3 3 3 3 b . . 
+    c b 3 3 3 3 3 3 3 3 3 1 1 b . . 
+    f b b c c c c b 3 3 3 1 1 c . . 
+    f b c c c d d d b b 3 3 3 c c . 
+    f b c b d d d d d d b b 3 3 b c 
+    . c b d d d d d d d d b c 3 3 c 
+    . c d c c d d d d d d c c c 3 f 
+    . f d d d d d c c d d c c c b f 
+    . f d b b b d d d d d c c c b f 
+    . . c d d d d d b f f c b b f f 
+    . . f b d d d b b d d f f f f . 
+    . . f f f c c b d d d f . . . . 
+    `,img`
+    . . . . . . . . b b b b . . . . 
+    . . . . b b b b 3 3 3 3 b . . . 
+    . c c b b 1 1 3 3 3 3 3 b b . . 
+    c c 3 3 1 1 3 3 3 3 3 1 1 b . . 
+    c b 3 3 3 3 3 3 3 3 3 1 1 b . . 
+    f b b c c c 3 3 3 3 3 3 3 c . . 
+    f b c c c b b b b 3 3 3 3 3 c . 
+    f b c c d d d d d b b 3 3 3 3 c 
+    . c c d c d d d d d d b c 3 3 c 
+    . c b d c d d d c d d c c c 3 f 
+    . f d d d d d c d d d c c c b f 
+    . f d b b b d d d d d c c c b f 
+    . . c d d d d d d d b c b b f f 
+    . . f f d d d d c c b f f f f . 
+    . f f b b f f c c b d d b f . . 
+    . f b b b f f . . b d d d f . . 
+    `],
+100,
+characterAnimations.rule(Predicate.MovingLeft)
+)
 animation.runImageAnimation(
 Coin2,
 [img`
@@ -121,7 +346,10 @@ Coin2,
 500,
 true
 )
+MUSSY.setPosition(640, 64)
 Character.ay = 200
+MUSSY.ay = 200
+tiles.placeOnTile(Coin2, tiles.getTileLocation(26, 4))
 scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
@@ -497,59 +725,8 @@ characterAnimations.rule(Predicate.NotMoving, Predicate.FacingRight)
 )
 characterAnimations.loopFrames(
 Character,
-[img`
-    . . . . . f f f f f . . . 
-    . . . f f f f f f f f f . 
-    . . f f f c f f f f f f . 
-    . . f f c f f f c f f f f 
-    f f c c f f f c c f f c f 
-    f f f f f e f f f f c c f 
-    . f f f e e f f f f f f f 
-    . . f f e e f b f e e f f 
-    . . . f 4 4 f 1 e 4 e f . 
-    . . . f 4 4 4 4 e f f f . 
-    . . . f f e e e e e f . . 
-    . . . f 7 7 7 e 4 4 e . . 
-    . . . f 7 7 7 e 4 4 e . . 
-    . . . f 6 6 6 f e e f . . 
-    . . . . f f f f f f . . . 
-    . . . . . . f f f . . . . 
-    `,img`
-    . . . . . . . . . . . . . 
-    . . . . f f f f f f . . . 
-    . . . f f f f f f f f f . 
-    . . f f f c f f f f f f . 
-    . f f f c f f f c f f f f 
-    f f c c f f f c c f f c f 
-    f f f f f e f f f f c c f 
-    . f f f e e f f f f f f f 
-    . . f f e e f b f e e f f 
-    . . f f 4 4 f 1 e 4 e f . 
-    . . . f 4 4 4 e e f f f . 
-    . . . f f e e 4 4 e f . . 
-    . . . f 7 7 e 4 4 e f . . 
-    . . f f 6 6 f e e f f f . 
-    . . f f f f f f f f f f . 
-    . . . f f f . . . f f . . 
-    `,img`
-    . . . . . . . . . . . . . 
-    . . . . f f f f f f . . . 
-    . . . f f f f f f f f f . 
-    . . f f f c f f f f f f . 
-    . f f f c f f f c f f f f 
-    f f c c f f f c c f f c f 
-    f f f f f e f f f f c c f 
-    . f f f e e f f f f f f f 
-    . f f f e e f b f e e f f 
-    . . f f 4 4 f 1 e 4 e f f 
-    . . . f 4 4 4 4 e f f f . 
-    . . . f f e e e e 4 4 4 . 
-    . . . f 7 7 7 7 e 4 4 e . 
-    . . f f 6 6 6 6 f e e f . 
-    . . f f f f f f f f f f . 
-    . . . f f f . . . f f . . 
-    `],
-100,
+assets.animation`Idle0`,
+500,
 characterAnimations.rule(Predicate.NotMoving, Predicate.FacingLeft)
 )
 let Life = 3
@@ -557,5 +734,12 @@ Checkpoint = 0
 forever(function () {
     if (Character.isHittingTile(CollisionDirection.Top)) {
         scene.cameraShake(4, 500)
+    }
+})
+forever(function () {
+    if (MUSSY.isHittingTile(CollisionDirection.Right)) {
+        MUSSY.vx = -50
+    } else if (MUSSY.isHittingTile(CollisionDirection.Left)) {
+        MUSSY.vx = 50
     }
 })
