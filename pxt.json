@@ -1,11 +1,12 @@
 {
-    "name": "CREAMY GAME",
+    "name": "CREAMY GAME Back Up",
     "description": "",
     "dependencies": {
         "device": "*",
         "arcade-background-scroll": "github:microsoft/arcade-background-scroll#v0.1.2",
         "arcade-character-animations": "github:microsoft/arcade-character-animations#v0.0.2",
-        "Timers": "github:microsoft/arcade-timers#v1.1.0"
+        "Timers": "github:microsoft/arcade-timers#v1.1.0",
+        "Info Plus": "pkg:Info Plus.json"
     },
     "files": [
         "main.blocks",
