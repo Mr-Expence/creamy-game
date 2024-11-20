@@ -72,22 +72,28 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, l
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (Checkpoint == 0) {
-        tiles.placeOnTile(Character, tiles.getTileLocation(3, 10))
-        scene.cameraShake(4, 100)
-        Life += -1
-    } else if (Checkpoint == 1) {
-        scene.cameraShake(4, 100)
-        Life += -1
-        tiles.placeOnTile(Character, tiles.getTileLocation(21, 9))
-    } else if (false) {
-    	
-    } else if (false) {
-    	
+    if (Character.y < Enemy_1.top + 2) {
+        sprites.destroy(Enemy_1)
+        Character.vy = -80
     } else {
-    	
+        if (Checkpoint == 0) {
+            tiles.placeOnTile(Character, tiles.getTileLocation(3, 10))
+            scene.cameraShake(4, 100)
+            Life += -1
+        } else if (Checkpoint == 1) {
+            scene.cameraShake(4, 100)
+            Life += -1
+            tiles.placeOnTile(Character, tiles.getTileLocation(21, 9))
+        } else if (false) {
+        	
+        } else if (false) {
+        	
+        } else {
+        	
+        }
     }
 })
+let Enemy_1: Sprite = null
 let Character: Sprite = null
 let Checkpoint = 0
 Checkpoint = 0
@@ -119,7 +125,7 @@ let Coin2 = sprites.create(img`
     . f d d d d f . 
     . . f f f f . . 
     `, SpriteKind.Coin)
-let MUSSY = sprites.create(img`
+Enemy_1 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . b b b b . . . . 
     . . . . b b b b 3 3 3 3 b . . . 
@@ -138,7 +144,7 @@ let MUSSY = sprites.create(img`
     . . f f f c c b d d d f . . . . 
     `, SpriteKind.Enemy)
 characterAnimations.loopFrames(
-MUSSY,
+Enemy_1,
 [img`
     . . . . b b b b . . . . . . . . 
     . . . b 3 3 3 3 b b b b . . . . 
@@ -211,9 +217,9 @@ MUSSY,
 100,
 characterAnimations.rule(Predicate.MovingRight)
 )
-MUSSY.vx = 50
+Enemy_1.vx = 50
 characterAnimations.loopFrames(
-MUSSY,
+Enemy_1,
 [img`
     . . . . . . . . b b b b . . . . 
     . . . . b b b b 3 3 3 3 b . . . 
@@ -346,9 +352,9 @@ Coin2,
 500,
 true
 )
-MUSSY.setPosition(640, 64)
+Enemy_1.setPosition(640, 64)
 Character.ay = 200
-MUSSY.ay = 200
+Enemy_1.ay = 200
 tiles.placeOnTile(Coin2, tiles.getTileLocation(26, 4))
 scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
@@ -737,9 +743,9 @@ forever(function () {
     }
 })
 forever(function () {
-    if (MUSSY.isHittingTile(CollisionDirection.Right)) {
-        MUSSY.vx = -50
-    } else if (MUSSY.isHittingTile(CollisionDirection.Left)) {
-        MUSSY.vx = 50
+    if (Enemy_1.isHittingTile(CollisionDirection.Right)) {
+        Enemy_1.vx = -50
+    } else if (Enemy_1.isHittingTile(CollisionDirection.Left)) {
+        Enemy_1.vx = 50
     }
 })
