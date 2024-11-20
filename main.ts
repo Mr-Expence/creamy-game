@@ -96,6 +96,29 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let Enemy_1: Sprite = null
 let Character: Sprite = null
 let Checkpoint = 0
+info.setLife(3)
+info.blockSetLifeIcon(img`
+    . . . . . . . . . . . . . . . . 
+    . . f f f f f f f f f f f f . . 
+    . f 2 2 2 2 2 2 2 2 2 2 2 2 f . 
+    . f 2 2 2 2 2 2 2 2 2 2 2 2 f . 
+    . f 2 2 2 f f f f f f 2 2 2 f . 
+    . f 2 2 f 2 2 2 2 2 2 f 2 2 f . 
+    . f 2 2 f 2 2 2 2 2 2 f 2 2 f . 
+    . f 2 2 f 2 2 2 2 2 2 f 2 2 f . 
+    . f 2 2 f 2 2 2 2 2 2 f 2 2 f . 
+    . f 2 2 f 2 2 2 2 2 2 f 2 2 f . 
+    . f 2 2 f 2 2 2 2 2 2 f 2 2 f . 
+    . f 2 2 2 f f f f f f 2 2 2 f . 
+    . f 2 2 2 2 2 2 2 2 2 2 2 2 f . 
+    . f 2 2 2 2 2 2 2 2 2 2 2 2 f . 
+    . . f f f f f f f f f f f f . . 
+    . . . . . . . . . . . . . . . . 
+    `)
+info.blockSetBg(15)
+info.blockSetBorder(15)
+info.blockSetFont(1)
+info.setScore(0)
 Checkpoint = 0
 Character = sprites.create(img`
     . . . . . . . . . . . . . 

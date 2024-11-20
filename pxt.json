@@ -6,7 +6,7 @@
         "arcade-background-scroll": "github:microsoft/arcade-background-scroll#v0.1.2",
         "arcade-character-animations": "github:microsoft/arcade-character-animations#v0.0.2",
         "Timers": "github:microsoft/arcade-timers#v1.1.0",
-        "Info Plus": "pkg:Info Plus.json"
+        "info-blocks-extra": "github:robo-technical-group/pxt-info-blocks-extra#v1.0.4"
     },
     "files": [
         "main.blocks",
